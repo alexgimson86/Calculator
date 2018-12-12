@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -47,3 +48,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 # Calculator
 Calculator coded using react 
 >>>>>>> e51da34fb459e888dcd7c3b7f0be3d1efddfe2e3
+=======
+
+>>>>>>> f1640070ca8151ddfc97dfdc97dd8ad4f34eef9c
