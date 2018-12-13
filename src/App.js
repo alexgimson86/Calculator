@@ -58,7 +58,7 @@ class App extends Component {
           <Button onClick={this.handleClick} label="9" value="9" />
           <Button onClick={this.handleClick} label="6" value="6" />
           <Button onClick={this.handleClick} label="3" value="3" />
-          <Button label="" value="null" />
+          <Button onClick={this.handleClick} label="%" value="%"/>
 
           <Button onClick={this.handleClick} label="-" value="-" />
           <Button onClick={this.handleClick} label="+" size="2" value="+" />
