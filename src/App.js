@@ -2,40 +2,67 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import update from 'immutability-helper';
+const math = require('mathjs')
 
 class App extends Component {
-  constructor(){
-    super()
-    this.state = {operations: [] }
+  constructor(props){
+    super(props);
+    this.state = {operations: [], answer: null, previousButton: null };
+    this.handleClick = this.handleClick.bind(this);
+    this.calculateOperations = this.calculateOperations.bind(this);
   }
   handleClick = e =>{
-    const value = e.target.getAttribute('data-value')
-    switch(value){
-      case 'clear': 
-      this.setState({
-        operations: [],
-      })
-      break
-      case 'equal': 
-      this.calculateOperations()
-      break
-      default:
-      const newOp = update(this.state.operations,{
-        $push: [value],
-      })
-      this.setState({
-        operations: newOp,
-      })
-      break
+    var value = e.target.getAttribute('data-value')
+    var valArr = []
+
+    
+    var keypress = 1
+    if(this.state.answer !== null && value !== 'clear'){
+      keypress = 2
+      if(value !== '-' && value !== '+' && value !== '*' && value !== '/')
+        valArr.push('clear')
+      else{
+        keypress = 3
+        valArr.push('clear')
+        valArr.push(this.state.answer)
+      }
     }
+    valArr.push(value);
+    for(let i = 0; i < keypress;i++){
+      switch(valArr[i]){
+        case 'clear': 
+        this.setState((state)=>{
+          return { operations: [],answer: null, previousButton: valArr[i]}
+        });
+        break
+        case 'equal': 
+        this.setState({
+          previousButton: valArr[i]
+        });
+        this.calculateOperations()
+        break
+        default:
+        var newOp = this.state.operations.slice();
+        newOp.push(valArr[i])
+        this.setState({
+          operations: newOp,
+          previousButton: valArr[i]
+        });
+       
+        break
+      }
+  }
   }
   calculateOperations = () =>{
-    
+    let mathString = this.state.operations.join('')
+    this.setState((state)=>{
+      return {answer : math.eval(mathString)}   
+    }) 
   }
   render() {
     return (
       <div className="App">
-      <Display data={this.state.operations} />
+      <Display data={this.state.operations} previousButton={this.state.previousButton} answer={this.state.answer} />
         <Buttons>
           <Button onClick={this.handleClick} label="C" value="clear" />
           <Button onClick={this.handleClick} label="7" value="7" />
@@ -83,8 +110,13 @@ class Button extends Component{
 }
 class Display extends Component{
   render(){
-    const displayString= this.props.data.join('')
-    return <div className="Display" >{displayString}</div>
+    const question = this.props.data.join('')
+    const answer = this.props.answer
+    const prev = this.props.previousButton
+    if(answer && prev === "equal")
+      return <div className="Display" >{answer}</div>
+    else
+      return <div className="Display">{question}</div>
   }
 }
   export default App;
