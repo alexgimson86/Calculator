@@ -38,6 +38,7 @@ class App extends Component {
     }) 
   }
   render() {
+    
     return (
       <div className="App">
       <Display data={this.state.operations}/>
@@ -58,7 +59,7 @@ class App extends Component {
           <Button onClick={this.handleClick} label="9" value="9" />
           <Button onClick={this.handleClick} label="6" value="6" />
           <Button onClick={this.handleClick} label="3" value="3" />
-          <Button onClick={this.handleClick} label="%" value="%"/>
+          <Button onClick={this.handleClick} style={{color:'orange'}} label="%" value="%"/>
 
           <Button onClick={this.handleClick} label="-" value="-" />
           <Button onClick={this.handleClick} label="+" size="2" value="+" />
@@ -89,11 +90,6 @@ class Button extends Component{
 class Display extends Component{
   render(){
     const question = this.props.data.join('')
-    const answer = this.props.answer
-    const prev = this.props.previousButton
-    if(answer && prev === "equal")
-      return <div className="Display" >{answer}</div>
-    else
       return <div className="Display">{question}</div>
   }
 }
